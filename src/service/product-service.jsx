@@ -21,6 +21,16 @@ class Product{
             data    : data
         });
     }
+    // 获取商品详情
+    getProduct(productId){
+        return _mm.request({
+            type    : 'post',
+            url     : '/manage/product/detail.do',
+            data    : {
+                productId : productId || 0
+            }
+        });
+    }
     // 变更商品销售状态
     setProductStatus(productInfo){
         return _mm.request({
@@ -29,20 +39,8 @@ class Product{
             data    : productInfo
         });
     }
-    /*
-    *  品类相关
-    */
-    // 根据父品类id获取品类列表
-    getCategoryList(parentCategoryId){
-        return _mm.request({
-            type    : 'post',
-            url     : '/manage/category/get_category.do',
-            data    : {
-                categoryId : parentCategoryId || 0
-            }
-        });
-    }
-     checkProduct(product){
+    // 检查保存商品的表单数据
+    checkProduct(product){
         let result = {
             status: true,
             msg: '验证通过'
@@ -93,14 +91,33 @@ class Product{
             data    : product
         });
     }
-    // 获取商品详情
-    getProduct(productId){
+    /*
+    *  品类相关
+    */
+    // 根据父品类id获取品类列表
+    getCategoryList(parentCategoryId){
         return _mm.request({
             type    : 'post',
-            url     : '/manage/product/detail.do',
+            url     : '/manage/category/get_category.do',
             data    : {
-                productId : productId || 0
+                categoryId : parentCategoryId || 0
             }
+        });
+    }
+    // 新增品类
+    saveCategory(category){
+        return _mm.request({
+            type    : 'post',
+            url     : '/manage/category/add_category.do',
+            data    : category
+        });
+    }
+    // 修改品类名称
+    updateCategoryName(category){
+        return _mm.request({
+            type    : 'post',
+            url     : '/manage/category/set_category_name.do',
+            data    : category
         });
     }
 }
