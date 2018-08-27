@@ -3,12 +3,15 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
+let WEBPACK_ENV = process.env.WEBPACK_ENV || 'dev'
+
+console.log(WEBPACK_ENV)
 module.exports = {
   entry: './src/app.jsx',
   output: {
     //当前根目录（__dirname+dist）
     path: path.resolve(__dirname, 'dist'),
-    publicPath:'/dist/',
+    publicPath: WEBPACK_ENV === 'dev' ? '/dist/' : '//s.jianliwu.com/admin-ve-fe/dist/',
     filename: 'js/app.js'
   },
   //resolve 模块的处理方案
@@ -23,6 +26,11 @@ module.exports = {
   },
   module: {
     rules: [
+             {
+              test:/\.js$/,
+              exclude:/(node_modules)/,
+              loader: 'babel-loader'
+            },
             {
                 test: /\.jsx$/,
                 exclude: /(node_modules)/,
